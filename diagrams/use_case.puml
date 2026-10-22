@@ -1,0 +1,35 @@
+@startuml
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam usecase {
+  BackgroundColor #EEF4FA
+  BorderColor #315A7D
+  ArrowColor #315A7D
+}
+actor "Пользователь" as User
+actor "Администратор" as Admin
+rectangle "HomeBudget" {
+  usecase "Войти в систему" as UC_Login
+  usecase "Просмотреть продукты" as UC_Products
+  usecase "Найти продукт или покупку" as UC_Search
+  usecase "Добавить продукт" as UC_AddProduct
+  usecase "Записать покупку" as UC_AddPurchase
+  usecase "Посмотреть историю покупок" as UC_History
+  usecase "Посмотреть расходы" as UC_Expenses
+  usecase "Управлять справочниками и данными" as UC_Manage
+  usecase "Управлять учетными записями" as UC_Users
+}
+User --> UC_Login
+User --> UC_Products
+User --> UC_Search
+User --> UC_AddProduct
+User --> UC_AddPurchase
+User --> UC_History
+User --> UC_Expenses
+Admin --> UC_Login
+Admin --> UC_Manage
+Admin --> UC_Users
+Admin --> UC_History
+@enduml
