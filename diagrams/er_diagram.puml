@@ -1,0 +1,66 @@
+@startuml
+hide circle
+skinparam linetype ortho
+skinparam shadowing false
+skinparam defaultFontName Arial
+skinparam entity {
+  BackgroundColor #F6F9FC
+  BorderColor #315A7D
+  FontColor #182B3A
+}
+entity "users" as users {
+  * user_id : INTEGER <<PK>>
+  --
+  username : TEXT <<UQ>>
+  full_name : TEXT
+  role : TEXT
+  created_at : TEXT
+}
+entity "categories" as categories {
+  * category_id : INTEGER <<PK>>
+  --
+  name : TEXT <<UQ>>
+  description : TEXT
+}
+entity "products" as products {
+  * product_id : INTEGER <<PK>>
+  --
+  category_id : INTEGER <<FK>>
+  name : TEXT
+  unit : TEXT
+  quantity_on_hand : REAL
+  min_quantity : REAL
+  is_active : INTEGER
+}
+entity "purchases" as purchases {
+  * purchase_id : INTEGER <<PK>>
+  --
+  user_id : INTEGER <<FK>>
+  purchase_date : TEXT
+  store : TEXT
+  note : TEXT
+}
+entity "purchase_items" as purchase_items {
+  * item_id : INTEGER <<PK>>
+  --
+  purchase_id : INTEGER <<FK>>
+  product_id : INTEGER <<FK>>
+  quantity : REAL
+  unit_price : REAL
+  --
+  UQ(purchase_id, product_id)
+}
+entity "expenses" as expenses {
+  * expense_id : INTEGER <<PK>>
+  --
+  purchase_id : INTEGER <<FK, UQ>>
+  amount : REAL
+  expense_date : TEXT
+  description : TEXT
+}
+categories ||--o{ products : классифицирует
+users ||--o{ purchases : оформляет
+purchases ||--o{ purchase_items : содержит
+products ||--o{ purchase_items : входит в
+purchases ||--|| expenses : отражается в
+@enduml
